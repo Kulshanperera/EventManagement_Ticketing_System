@@ -73,4 +73,11 @@
       gap: 10px;
       align-items: center;
     }
+    
   }
+
+   /* Body background */
+.back {
+    background-color: rgb(68, 32, 68);
+    min-height: 100vh; /* This ensures the background covers the full viewport height */
+}
