@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
+  padding: 30px;
+  border-radius: 8px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.nav {
+  margin-bottom: 20px;
+}
+
+.nav a {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: inear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
+  border-radius: 5px;
+}
+
+.form-section h2 {
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group1 {
+  margin-bottom: 150px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: bold;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.ticket-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-remove {
+  background: #dc3545;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.btn-submit {
+  background: #007bff;
+  padding: 12px 30px;
+  font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.message {
+  padding: 15px;
+  background: #d4edda;
+  color: #155724;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.error {
+  padding: 15px;
+  background: #f8d7da;
+  color: #721c24;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}

@@ -68,14 +68,12 @@
 }
   /* Call to action button */
   .navbar .cta {
-  background-color: #f9c74f;
   color: #1a1a1a;
-  padding: 8px 40px;
-  border-radius: 4px;
+  padding: 10px 40px;
+  border-radius: 25px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
-  background: linear-gradient(135deg, #c3c1c5 0%, #8997d8 100%);
+  background: linear-gradient(#c3c1c5 0%, #8997d8 100%);
   flex-shrink: 0; /* Prevent button from shrinking */
   display: inline-flex; /* Better alignment */
   align-items: center;
@@ -171,6 +169,7 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: 50px;
+    flex: 1;
 }
 
 /* Responsive Design */

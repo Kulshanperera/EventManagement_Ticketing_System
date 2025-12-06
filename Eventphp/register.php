@@ -7,39 +7,62 @@ if (isLoggedIn()) {
 }
 
 $errors = array();
+$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
     
+    // Validation
     if (empty($username)) {
         $errors[] = "Username is required";
+    } elseif (strlen($username) < 3) {
+        $errors[] = "Username must be at least 3 characters";
+    }
+    
+    if (empty($email)) {
+        $errors[] = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
     }
     
     if (empty($password)) {
         $errors[] = "Password is required";
+    } elseif (strlen($password) < 6) {
+        $errors[] = "Password must be at least 6 characters";
     }
     
+    if ($password !== $confirm_password) {
+        $errors[] = "Passwords do not match";
+    }
+    
+    // Check if username or email already exists
     if (empty($errors)) {
-        $sql = "SELECT id, username, email, password FROM users WHERE username = ? OR email = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $username, $username);
+        $check_sql = "SELECT id FROM users WHERE username = ? OR email = ?";
+        $stmt = mysqli_prepare($conn, $check_sql);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
         mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
+        mysqli_stmt_store_result($stmt);
         
-        if ($user = mysqli_fetch_assoc($result)) {
-            if (password_verify($password, $user['password'])) {
-                // Login successful
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['email'] = $user['email'];
-                
-                redirect('dashboard.php');
-            } else {
-                $errors[] = "Invalid username or password";
-            }
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            $errors[] = "Username or email already exists";
+        }
+        mysqli_stmt_close($stmt);
+    }
+    
+    // Insert user if no errors
+    if (empty($errors)) {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $insert_sql);
+        mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashed_password);
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $success = "Registration successful! You can now login.";
         } else {
-            $errors[] = "Invalid username or password";
+            $errors[] = "Registration failed. Please try again.";
         }
         mysqli_stmt_close($stmt);
     }
@@ -51,18 +74,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event & Ticketing Box - Login</title>
+    <title>Event Garden - Register</title>
     <link rel="stylesheet" href="HomePage.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: Arial, sans-serif; 
-            background: #f4f4f4; 
+            background: #f4f4f4ff; 
             min-height: 100vh;
         }
         
-        /* Login Form Styles */
-        .login-section {
+        /* Register Form Styles */
+        .register-section {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -70,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 40px 20px;
         }
         
-        .login-container { 
-            background: white; 
+        .register-container { 
+            background: linear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
             padding: 30px; 
             border-radius: 8px; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
@@ -79,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             max-width: 400px; 
         }
         
-        .login-container h2 { 
+        .register-container h2 { 
             margin-bottom: 20px; 
             color: #333; 
             text-align: center; 
@@ -99,20 +122,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         input { 
             width: 100%; 
             padding: 10px; 
-            border: 1px solid #ddd; 
+            border: 1px solid #cb0df1ff; 
             border-radius: 4px; 
             font-size: 14px; 
         }
         
         input:focus { 
             outline: none; 
-            border-color: #2196F3; 
+            border-color: #4CAF50; 
         }
         
         button { 
             width: 100%; 
             padding: 12px; 
-            background: #2196F3; 
+            background: #4CAF50; 
             color: white; 
             border: none; 
             border-radius: 4px; 
@@ -122,11 +145,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         button:hover { 
-            background: #0b7dda; 
+            background: #45a049; 
         }
         
         .error { 
             background: #f44336; 
+            color: white; 
+            padding: 10px; 
+            border-radius: 4px; 
+            margin-bottom: 15px; 
+        }
+        
+        .success { 
+            background: #4CAF50; 
             color: white; 
             padding: 10px; 
             border-radius: 4px; 
@@ -139,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         .link a { 
-            color: #2196F3; 
+            color: #4CAF50; 
             text-decoration: none; 
         }
         
@@ -152,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Header Navigation -->
     <header>
         <nav class="navbar">
-            <a href="index.php" class="logo">Event & Ticketing Box</a>
+            <a href="index.php" class="logo">Event Garden</a>
             <ul class="nav-menu">
                 <li><a href="HomePage.html">Home</a></li>
                 <li><a href="#">Ticketing</a></li>
@@ -160,27 +191,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <li><a href="#">About</a></li>
             </ul>
             <div class="auth-buttons">
-                <a href="register.php" class="cta">Register</a>
+                <a href="login.php" class="cta">Login</a>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section (Homepage Content)
-    <section class="hero">
+    <!-- Hero Section (Homepage Content) -->
+    <!-- <section class="hero">
         <div class="hero-content">
-            <h1>Welcome to Event & Ticketing Box</h1>
-            <p>Discover amazing events and book your tickets seamlessly</p>
+            <h1>Join Event Garden</h1>
+            <p>Create an account to discover amazing events and book tickets seamlessly</p>
             <div class="hero-buttons">
                 <a href="events.php" class="btn-primary">Browse Events</a>
-                <a href="register.php" class="btn-secondary">Get Started</a>
+                <a href="#register" class="btn-secondary">Sign Up Now</a>
             </div>
         </div>
     </section> -->
 
-    <!-- Login Section -->
-    <section class="login-section">
-        <div class="login-container">
-            <h2>Login to Your Account</h2>
+    <!-- Register Section -->
+    <section class="register-section" id="register">
+        <div class="register-container">
+            <h2>Create Your Account</h2>
             
             <?php if (!empty($errors)): ?>
                 <div class="error">
@@ -190,10 +221,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endif; ?>
             
+            <?php if ($success): ?>
+                <div class="success"><?php echo htmlspecialchars($success); ?></div>
+            <?php endif; ?>
+            
             <form method="POST" action="">
                 <div class="form-group">
-                    <label>Username or Email</label>
+                    <label>Username</label>
                     <input type="text" name="username" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
                 </div>
                 
                 <div class="form-group">
@@ -201,19 +241,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" name="password" required>
                 </div>
                 
-                <button type="submit">Login</button>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" required>
+                </div>
+                
+                <button type="submit">Register</button>
             </form>
             
             <div class="link">
-                Don't have an account? <a href="register.php">Register here</a>
+                Already have an account? <a href="login.php">Login here</a>
             </div>
         </div>
     </section>
-
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Event & Ticketing Box. All rights reserved.</p>
+            <p>&copy; 2025 Event Garden. All rights reserved.</p>
         </div>
     </footer>
 </body>

@@ -22,12 +22,13 @@ $email = $_SESSION['email'];
 
 <header>
   <nav class="navbar">
-    <a href="#" class="logo">Event & Ticketing Box</a>
+    <a href="#" class="logo">Event Garden</a>
     <ul>
       <li><a href="HomePage.html">Home</a></li>
       <li><a href="#">Ticketing</a></li>
       <li><a href="#">Browse Events</a></li>
       <li><a href="#">About</a></li>
+      <li><a href="event.php">Create an event</a></li>
     </ul>
     <a href="Logout.php" class="cta">Logout</a>
   </nav>
@@ -37,7 +38,7 @@ $email = $_SESSION['email'];
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Event & Ticketing Box. All rights reserved.</p>
+            <p>&copy; 2025 Event Garden. All rights reserved.</p>
         </div>
     </footer>
 
