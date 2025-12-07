@@ -74,20 +74,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 mysqli_query($conn, $ticket_sql);
             }
         }
-        
-        $message = "Event updated successfully!";
+                $message = "Event updated successfully!";
         
         // Refresh event data
         $result = mysqli_query($conn, $sql);
-        $event = mysqli_fetch_assoc($result);
-        
-        $tickets_result = mysqli_query($conn, $ticket_sql);
-        $tickets = array();
-        while ($ticket = mysqli_fetch_assoc($tickets_result)) {
-            $tickets[] = $ticket;
+
+    if (!$result) {
+    die("Query Error 1: " . mysqli_error($conn));
+    }
+
+    $event = mysqli_fetch_assoc($result);
+
+    // second query
+    $tickets_result = mysqli_query($conn, $ticket_sql);
+
+    if (!$tickets_result) {
+    die("Query Error 2: " . mysqli_error($conn));
+    }
+
+    $tickets = array();
+    while ($ticket = mysqli_fetch_assoc($tickets_result)) {
+    $tickets[] = $ticket;
         }
-    } else {
-        $error = "Error: " . mysqli_error($conn);
     }
 }
 ?>
@@ -172,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label>Current Image</label>
                     <?php if ($event['image']): ?>
                         <img src="<?php echo $event['image']; ?>" class="current-image" alt="Current Event Image">
+
                     <?php else: ?>
                         <p>No image uploaded</p>
                     <?php endif; ?>
@@ -180,6 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Upload New Image (Leave empty to keep current)</label>
                     <input type="file" name="image" accept="image/*">
+                    <button type="button" class="clearButton" id="clearImage">clear</button>
                 </div>
             </div>
             
@@ -241,7 +251,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <button type="button" class="btn" onclick="addTicket()">+ Add Ticket</button>
             </div>
-            
             <button type="submit" class="btn btn-submit">Update Event</button>
         </form>
     </div>

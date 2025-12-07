@@ -83,6 +83,8 @@
             };
     });
         var ticketCount = 1;
+        var quantities = {};
+        var prices = {};
         
         function addTicket() {
             ticketCount++;
@@ -103,9 +105,6 @@
             
             document.getElementById('ticketContainer').insertAdjacentHTML('beforeend', html);
         }
-
-        var quantities = {};
-        var prices = {};
         
         function updateQty(index, change, price) {
             if (!quantities[index]) quantities[index] = 0;

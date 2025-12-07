@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Garden - Login</title>
-    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="../eventcss/HomePage.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -168,10 +168,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <nav class="navbar">
         <a href="index.php" class="logo">Event Garden</a>
         <ul class="nav-menu">
-            <li><a href="HomePage.html">Home</a></li>
-            <li><a href="events.php">Ticketing</a></li>
-            <li><a href="browse.php">Browse Events</a></li>
-            <li><a href="about.php">About</a></li>
+            <li><a href="../Eventhtml/HomePage.html">Home</a></li>
+            <li><a href="#">Ticketing</a></li>
+            <li><a href="#">Browse Events</a></li>
+            <li><a href="#">About</a></li>
         </ul>
         <div class="auth-buttons">
             <?php if (isLoggedIn()): ?>

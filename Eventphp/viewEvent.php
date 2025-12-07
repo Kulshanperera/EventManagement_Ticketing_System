@@ -33,9 +33,11 @@ $tickets = mysqli_query($conn, $ticket_sql);
   </nav>
 </header>
 <body class="back">
-    <a href="allEventsAdmin.php" class="btn-back">← Back to Events</a>
-    
+            <div class="nav">
+              <a href="allEventsAdmin.php" class="btn-back">← Back to Events</a>
+            </div>
     <div class="container">
+        
         <div>
             <div class="event-section">
                 <?php if ($event['image']): ?>

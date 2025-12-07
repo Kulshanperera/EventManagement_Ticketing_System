@@ -10,7 +10,15 @@ body {
   min-height: 100vh;
   padding: 20px;
 }
-
+.nav {
+  margin-bottom: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
