@@ -43,9 +43,11 @@ h1 {
 }
 
 .form-section h2 {
-  color: #555;
+  text-align: center;
+  color: #474646;
   margin-bottom: 15px;
   font-size: 18px;
+
 }
 
 .form-group {
@@ -53,7 +55,7 @@ h1 {
 }
 
 .form-group1 {
-  margin-bottom: 150px;
+  margin-bottom: 5px;
 }
 
 label {
@@ -128,4 +130,8 @@ textarea {
   color: #721c24;
   border-radius: 4px;
   margin-bottom: 20px;
+}
+
+.clearButton {
+  white-space: nowrap;
 }

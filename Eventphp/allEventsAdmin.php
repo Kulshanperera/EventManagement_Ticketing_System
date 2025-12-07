@@ -1,8 +1,27 @@
 <?php
 require_once 'config.php';
 
+// $sql = "SELECT * FROM events ORDER BY event_date DESC";
+// $result = mysqli_query($conn, $sql);
 $sql = "SELECT * FROM events ORDER BY created_at DESC";
 $result = mysqli_query($conn, $sql);
+
+$message = '';
+if (isset($_GET['deleted'])) {
+    $message = "";
+} elseif (isset($_GET['error'])) {
+    $message = "Error deleting event!";
+}
+$today = date('Y-m-d');
+
+$sql = "SELECT * FROM events 
+        WHERE event_date >= '$today'
+        ORDER BY event_date ASC";
+
+$result = mysqli_query($conn, $sql);
+
+// COUNT upcoming events
+$event_count = mysqli_num_rows($result);
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +30,7 @@ $result = mysqli_query($conn, $sql);
     <title>Events List</title>
     <link rel="stylesheet" href="../eventcss/HomePage.css">
     <link rel="stylesheet" href="../eventcss/allEvents.css">
+    <script src="../EventJavascript/Event.js"></script>
 </head>
 <header>
   <nav class="navbar">
@@ -29,30 +49,44 @@ $result = mysqli_query($conn, $sql);
     <div class="container">
         <div class="nav">
         </div>
-        
         <h1>Upcoming Events</h1>
-        
+        <h3>Total Events: <?php echo $event_count; ?></h3>
+        <?php if ($message): ?>
+            <div class="message"><?php echo $message; ?></div>
+        <?php endif; ?>
+        <?php if (mysqli_num_rows($result) > 0): ?>
         <div class="event-grid">
             <?php while ($event = mysqli_fetch_assoc($result)): ?>
                 <div class="event-card">
                     <?php if ($event['image']): ?>
                         <img src="<?php echo $event['image']; ?>" alt="Event Image">
                     <?php else: ?>
-                        <img src="https://via.placeholder.com/400x200?text=Event" alt="Event Image">
+                        <img src="Eventimages/DefaultEvent.jpg" alt="Event Image">
                     <?php endif; ?>
                     
                     <div class="event-content">
-                        <h2 class="event-title"><?php echo $event['title']; ?></h2>
+                        <h1 class="event-title"><?php echo $event['title']; ?></h1>
                         <p class="event-info">📅 <?php echo date('F d, Y', strtotime($event['event_date'])); ?></p>
                         <p class="event-info">🕐 <?php echo date('g:i A', strtotime($event['event_time'])); ?></p>
                         <p class="event-info">📍 <?php echo $event['location']; ?></p>
-                        <p class="event-info">🖊 <?php echo $event['description']; ?></p>
-                        <a href="viewEvent.php?id=<?php echo $event['id']; ?>" class="btn-view">View Details</a>
+                        <p class="event-info">🖊 <?php $desc = $event['description']; 
+                        echo strlen($desc) > 100 ? substr($desc, 0, 100) . "..." : $desc;?></p>
+                        <a href="viewEvent.php?id=<?php echo $event['id']; ?>" class="btn-view">View Event</a>
+                        <a href="editEvent.php?id=<?php echo $event['id']; ?>" class="btn-view">Edit Event</a>
+                        <button class="btn-delete" onclick="deleteEvent(<?php echo $event['id']; ?>, 
+                        '<?php echo addslashes($event['title']); ?>')">Remove</button>
                     </div>
                 </div>
             <?php endwhile; ?>
+            <?php else: ?>
+             <div class="no-events">
+                <p>📅 No events available at the moment</p>
+                <a href="event.php" class="btn-create">Create Your First Event</a>
+             </div>
+            <?php endif; ?>
         </div>
     </div>    
+    
     <!-- Footer -->
     <footer>
         <div class="footer-content">

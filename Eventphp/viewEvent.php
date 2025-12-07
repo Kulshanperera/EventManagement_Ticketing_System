@@ -17,9 +17,8 @@ $tickets = mysqli_query($conn, $ticket_sql);
     <title><?php echo $event['title']; ?></title>
     <link rel="stylesheet" href="../eventcss/HomePage.css">
     <link rel="stylesheet" href="../eventcss/viewEvent.css">
-
+    <script src="../EventJavascript/Event.js"></script>
 </head>
-
 <header>
   <nav class="navbar">
     <a href="#" class="logo">Event Garden</a>
@@ -34,7 +33,7 @@ $tickets = mysqli_query($conn, $ticket_sql);
   </nav>
 </header>
 <body class="back">
-    <a href="allEvents.php" class="btn-back">← Back to Events</a>
+    <a href="allEventsAdmin.php" class="btn-back">← Back to Events</a>
     
     <div class="container">
         <div>
@@ -42,7 +41,7 @@ $tickets = mysqli_query($conn, $ticket_sql);
                 <?php if ($event['image']): ?>
                     <img src="<?php echo $event['image']; ?>" class="event-image" alt="Event">
                 <?php else: ?>
-                    <img src="https://via.placeholder.com/800x400?text=Event" class="event-image" alt="Event">
+                    <img src="Eventimages/DefaultEvent.jpg" class="event-image" alt="Event">
                 <?php endif; ?>
                 
                 <div class="event-info">
@@ -55,9 +54,17 @@ $tickets = mysqli_query($conn, $ticket_sql);
             </div>
             
             <div class="event-details">
-                <h2>Event Details 🔊 </h2>
-                <p><?php echo nl2br($event['description']); ?></p>
+                <p><h2>Event Details 🔊 </h2> 
+                <?php echo nl2br($event['description']); ?></p>
             </div>
+            
+                <?php if (!empty($event['summary'])): ?>
+                 <div class="event-details">   
+                <p><h2>Summary:</h2> 
+                <?= $event['summary']; ?></p>
+                    </div>
+                    <?php endif; ?>
+        
         </div>
         
         <div class="ticket-section">
@@ -97,34 +104,6 @@ $tickets = mysqli_query($conn, $ticket_sql);
         </div>
     </div>
     
-    <script>
-        var quantities = {};
-        var prices = {};
-        
-        function updateQty(index, change, price) {
-            if (!quantities[index]) quantities[index] = 0;
-            if (!prices[index]) prices[index] = price;
-            
-            quantities[index] = Math.max(0, quantities[index] + change);
-            document.getElementById('qty-' + index).textContent = quantities[index];
-            
-            updateTotal();
-        }
-        
-        function updateTotal() {
-            var totalTickets = 0;
-            var totalPrice = 0;
-            
-            for (var key in quantities) {
-                totalTickets += quantities[key];
-                totalPrice += quantities[key] * prices[key];
-            }
-            
-            document.getElementById('totalTickets').textContent = totalTickets;
-            document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' LKR';
-        }
-    </script>
-
         <!-- Footer -->
     <footer>
         <div class="footer-content">

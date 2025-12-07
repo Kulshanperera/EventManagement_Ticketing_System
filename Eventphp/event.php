@@ -98,28 +98,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="form-group">
                     <label>Event Title *</label>
-                    <input type="text" name="title" required>
+                    <input type="text" name="title" id="title" >
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Event Date *</label>
-                        <input type="date" name="event_date" required>
+                        <input type="date" name="event_date" id="eventDate">
                     </div>
                     
                     <div class="form-group">
                         <label>Event Time *</label>
-                        <input type="time" name="event_time" required>
+                        <input type="time" name="event_time" id="eventTime" >
                     </div>
+                </div>
 
                 <div class="form-group">
                     <label>Location *</label>
-                    <input type="text" name="location" required>
+                    <input type="text" name="location" id="location">
                 </div>
-                
+            <div class="form-row">
                 <div class="form-group">
                     <label>Category *</label>
-                    <select name="category" required>
+                    <select name="category" id="category">
                         <option value="">Select category</option>
                         <option value="concert">Concert</option>
                         <option value="sports">Sports</option>
@@ -127,12 +128,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="festival">Festival</option>
                     </select>
                 </div>
-            </div>
-                <div class="form-group1">
-                    <label>Event Image</label>
-                    <input type="file" name="image" accept="image/*">
+
+                <div class="form-group">
+                    <label>Event Image </label>
+                    <input type="file" name="image" id="image" accept="image/*">
+                    <button type="button" class="clearButton" id="clearImage">clear</button>
                 </div>
-            </div>
+            </div> 
+        </div>
             
             <!-- About Event -->
             <div class="form-section">
@@ -140,16 +143,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="form-group">
                     <label>Description *</label>
-                    <textarea name="description" required></textarea>
+                    <textarea name="description" id="description"  maxlength="500"></textarea>
+                    <div id="descCounter">0 / 500</div>
                 </div>
                 
                 <div class="form-group">
-                    <label>Quick Summary</label>
-                    <textarea name="summary"></textarea>
+                    <label>Summary</label>
+                    <textarea name="summary" id="sum" maxlength="100"></textarea>
+                    <div id="sumCounter">0 / 100</div>
                 </div>
             </div>
             
             <!-- Tickets -->
+            
             <div class="form-section">
                 <h2>Ticket Pricing</h2>
                 
@@ -184,11 +190,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <button type="button" class="btn" onclick="addTicket()">+ Add Ticket</button>
             </div>
-            
+           
             <button type="submit" class="btn btn-submit">Create Event</button>
+            <button type="reset" class="btn btn-submit">Reset Form</button>
         </form>
     </div>
-    
     <!-- Footer -->
     <footer>
         <div class="footer-content">
