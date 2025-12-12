@@ -64,11 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <nav class="navbar">
     <a href="#" class="logo">Event Garden</a>
     <ul>
-      <li><a href="HomePage.html">Home</a></li>
-      <li><a href="#">Ticketing</a></li>
-      <li><a href="#">Browse Events</a></li>
+      <li><a href="HomePage.php">Home</a></li>
+      <li><a href="ViewEvents.php">Browse Events</a></li>
       <li><a href="#">About</a></li>
+    <?php if (isLoggedIn()): ?>
+    <?php if (isAdmin()): ?>
       <li><a href="event.php">Create an event</a></li>
+    <?php endif; ?>
+        <?php else: ?>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+    <?php endif; ?>
     </ul>
     <a href="Logout.php" class="cta">Logout</a>
   </nav>
@@ -77,8 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="container">
         <div class="nav">
-            <a href="allEventsUser.php">View Events</a>
-            <a href="allEventsAdmin.php">View Events as an admin</a>
+            <a href="allEventsAdmin.php">View Events</a>
         </div>
         
         <h1>Create New Event</h1>

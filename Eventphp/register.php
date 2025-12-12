@@ -53,11 +53,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     // Insert user if no errors
-    if (empty($errors)) {
+    // if (empty($errors)) {
+    //     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    //     $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    //     $stmt = mysqli_prepare($conn, $insert_sql);
+    //     mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashed_password);
+        
+    //     if (mysqli_stmt_execute($stmt)) {
+    //         $success = "Registration successful! You can now login.";
+    //     } else {
+    //         $errors[] = "Registration failed. Please try again.";
+    //     }
+    //     mysqli_stmt_close($stmt);
+    // }
+
+        if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $role = 'customer';
+        $insert_sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $insert_sql);
-        mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashed_password);
+        mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed_password, $role);
         
         if (mysqli_stmt_execute($stmt)) {
             $success = "Registration successful! You can now login.";
@@ -226,6 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
             
             <form method="POST" action="">
+
                 <div class="form-group">
                     <label>Username</label>
                     <input type="text" name="username" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
@@ -245,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label>Confirm Password</label>
                     <input type="password" name="confirm_password" required>
                 </div>
-                
+                                
                 <button type="submit">Register</button>
             </form>
             

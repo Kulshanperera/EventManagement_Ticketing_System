@@ -6,6 +6,14 @@ require_once 'config.php';
 //     redirect('dashboard.php');
 // }
 
+if (isLoggedIn()) {
+    if (isAdmin()) {
+        redirect('admin_dashboard.php');
+    } else {
+        redirect('index.php');
+    }
+}
+
 $errors = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
     if (empty($errors)) {
-        $sql = "SELECT id, username, email, password FROM users WHERE username = ? OR email = ?";
+        $sql = "SELECT id, username, email, password, role FROM users WHERE username = ? OR email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ss", $username, $username);
         mysqli_stmt_execute($stmt);
@@ -29,12 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         if ($user = mysqli_fetch_assoc($result)) {
             if (password_verify($password, $user['password'])) {
-                // Login successful
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['email'] = $user['email'];
+                $_SESSION['role'] = $user['role'];
                 
-                redirect('dashboard.php');
+                if ($user['role'] == 'admin') {
+                    redirect('allEventsAdmin.php');
+                } else {
+                    redirect('DashBoard.php');
+                }
             } else {
                 $errors[] = "Invalid username or password";
             }

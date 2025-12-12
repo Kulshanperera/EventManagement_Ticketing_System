@@ -9,6 +9,12 @@ $event = mysqli_fetch_assoc($result);
 
 $ticket_sql = "SELECT * FROM tickets WHERE event_id = $event_id";
 $tickets = mysqli_query($conn, $ticket_sql);
+
+$back_url = 'DashBoard.php';
+if (isLoggedIn() && isAdmin()) {
+    $back_url = 'allEventsAdmin.php';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -27,14 +33,22 @@ $tickets = mysqli_query($conn, $ticket_sql);
       <li><a href="#">Ticketing</a></li>
       <li><a href="#">Browse Events</a></li>
       <li><a href="#">About</a></li>
+      <?php if (isLoggedIn()): ?>
+    <?php if (isAdmin()): ?>
       <li><a href="event.php">Create an event</a></li>
+       <?php endif; ?>
+
+       <?php else: ?>
+    <a href="login.php">Login</a>
+    <a href="register.php">Register</a>
+<?php endif; ?>
     </ul>
     <a href="Logout.php" class="cta">Logout</a>
   </nav>
 </header>
 <body class="back">
             <div class="nav">
-              <a href="allEventsAdmin.php" class="btn-back">← Back to Events</a>
+            <a href="<?php echo $back_url; ?>" class="back-btn">← Back to <?php echo isLoggedIn() && isAdmin() ? 'Events' : 'Dashboard'; ?></a>
             </div>
     <div class="container">
         

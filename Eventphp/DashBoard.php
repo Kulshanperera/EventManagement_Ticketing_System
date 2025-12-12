@@ -46,7 +46,6 @@ $event_count = mysqli_num_rows($result);
       <li><a href="#">Ticketing</a></li>
       <li><a href="#">Browse Events</a></li>
       <li><a href="#">About</a></li>
-      <li><a href="event.php">Create an event</a></li>
     </ul>
     <a href="Logout.php" class="cta">Logout</a>
   </nav>
