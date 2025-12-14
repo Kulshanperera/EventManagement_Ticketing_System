@@ -82,10 +82,8 @@
             document.getElementById("image").value=""
             };
     });
-        var ticketCount = 1;
-        var quantities = {};
-        var prices = {};
         
+        var ticketCount = 0;        
         function addTicket() {
             ticketCount++;
             var html = '<div class="ticket-item">' +
@@ -106,12 +104,39 @@
             document.getElementById('ticketContainer').insertAdjacentHTML('beforeend', html);
         }
         
-        function updateQty(index, change, price) {
+        var quantities = {};
+        var prices = {};
+        var maxQuantities = {};
+        
+        function updateQty(index, change, price, maxQty) {
             if (!quantities[index]) quantities[index] = 0;
             if (!prices[index]) prices[index] = price;
+            if (!maxQuantities[index]) maxQuantities[index] = maxQty;
             
-            quantities[index] = Math.max(0, quantities[index] + change);
+            // Calculate new quantity
+            var newQty = quantities[index] + change;
+            
+            // Check if trying to go below 0
+            if (newQty < 0) {
+                return;
+            }
+            
+            // Check if exceeding available tickets
+            if (newQty > maxQuantities[index]) {
+                alert('Only ' + maxQuantities[index] + ' tickets available ');
+                // alert('Sorry! Only ' + maxQuantities[index] + ' tickets available for ' + getTicketName[ticket_name]);
+                return;
+            }
+            
+            quantities[index] = newQty;
             document.getElementById('qty-' + index).textContent = quantities[index];
+            
+            // Update available tickets display
+            var availableElement = document.getElementById('available-' + index);
+            if (availableElement) {
+                var remainingTickets = maxQuantities[index] - quantities[index];
+                availableElement.textContent = remainingTickets;
+            }
             
             updateTotal();
         }

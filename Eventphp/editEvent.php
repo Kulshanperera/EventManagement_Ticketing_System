@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Handle new image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $upload_dir = 'uploads/';
+        $upload_dir = 'Eventimages/';
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
@@ -65,37 +65,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['ticket_name']) && is_array($_POST['ticket_name'])) {
             for ($i = 0; $i < count($_POST['ticket_name']); $i++) {
                 $ticket_name = mysqli_real_escape_string($conn, $_POST['ticket_name'][$i]);
-                $price = $_POST['ticket_price'][$i];
-                $quantity = $_POST['ticket_quantity'][$i];
-                $status = $_POST['ticket_status'][$i];
+                $price = floatval($_POST['ticket_price'][$i]); // Convert to float
+                $quantity = intval($_POST['ticket_quantity'][$i]); // Convert to int
+                $status = mysqli_real_escape_string($conn, $_POST['ticket_status'][$i]); // Escape status too
                 
                 $ticket_sql = "INSERT INTO tickets (event_id, ticket_name, price, quantity, status) 
                               VALUES ($event_id, '$ticket_name', $price, $quantity, '$status')";
-                mysqli_query($conn, $ticket_sql);
+                
+                if (!mysqli_query($conn, $ticket_sql)) {
+                    $error .= "Error inserting ticket: " . mysqli_error($conn) . "<br>";
+                }
             }
         }
-                $message = "Event updated successfully!";
+        
+        $message = "Event updated successfully!";
         
         // Refresh event data
         $result = mysqli_query($conn, $sql);
-
-    if (!$result) {
-    die("Query Error 1: " . mysqli_error($conn));
-    }
-
-    $event = mysqli_fetch_assoc($result);
-
-    // second query
-    $tickets_result = mysqli_query($conn, $ticket_sql);
-
-    if (!$tickets_result) {
-    die("Query Error 2: " . mysqli_error($conn));
-    }
-
-    $tickets = array();
-    while ($ticket = mysqli_fetch_assoc($tickets_result)) {
-    $tickets[] = $ticket;
+        
+        if (!$result) {
+            die("Query Error 1: " . mysqli_error($conn));
         }
+        
+        $event = mysqli_fetch_assoc($result);
+        
+        // Refresh tickets data - FIXED: Use fresh query
+        $ticket_sql = "SELECT * FROM tickets WHERE event_id = $event_id";
+        $tickets_result = mysqli_query($conn, $ticket_sql);
+        
+        if (!$tickets_result) {
+            die("Query Error 2: " . mysqli_error($conn));
+        }
+        
+        $tickets = array();
+        while ($ticket = mysqli_fetch_assoc($tickets_result)) {
+            $tickets[] = $ticket;
+        }
+    } else {
+        $error = "Error updating event: " . mysqli_error($conn);
     }
 }
 ?>

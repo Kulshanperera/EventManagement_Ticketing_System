@@ -129,24 +129,31 @@ if (isLoggedIn() && isAdmin()) {
         
         </div>
         
-        <div class="ticket-section">
+ <div class="ticket-section">
             <h2>Select Tickets</h2>
             
             <?php $index = 0; while ($ticket = mysqli_fetch_assoc($tickets)): ?>
                 <div class="ticket-item">
                     <div class="ticket-header">
-                        <span class="ticket-name"><?php echo $ticket['ticket_name']; ?></span>
+                        <span class="ticket-name"><?php echo htmlspecialchars($ticket['ticket_name']); ?></span>
                         <span class="ticket-price"><?php echo number_format($ticket['price']); ?> LKR</span>
                     </div>
                     <div class="ticket-controls">
                         <div>
-                            <button class="quantity-btn" onclick="updateQty(<?php echo $index; ?>, -1, <?php echo $ticket['price']; ?>)">−</button>
+                            <button class="quantity-btn" onclick="updateQty(<?php echo $index; ?>, -1, <?php echo $ticket['price']; ?>, <?php echo $ticket['quantity'] ? $ticket['quantity'] : 999; ?>)" <?php echo $ticket['status'] == 'sold-out' ? 'disabled' : ''; ?>>−</button>
                             <span class="quantity" id="qty-<?php echo $index; ?>">0</span>
-                            <button class="quantity-btn" onclick="updateQty(<?php echo $index; ?>, 1, <?php echo $ticket['price']; ?>)">+</button>
+                            <button class="quantity-btn" onclick="updateQty(<?php echo $index; ?>, 1, <?php echo $ticket['price']; ?>, <?php echo $ticket['quantity'] ? $ticket['quantity'] : 999; ?>)" <?php echo $ticket['status'] == 'sold-out' ? 'disabled' : ''; ?>>+</button>
                         </div>
-                        <span class="status-badge status-<?php echo $ticket['status']; ?>">
-                            <?php echo $ticket['status'] == 'available' ? 'Available now' : 'Sold out'; ?>
-                        </span>
+                        <div style="text-align: right;">
+                            <span class="status-badge status-<?php echo $ticket['status']; ?>">
+                                <?php echo $ticket['status'] == 'available' ? 'Available now' : 'Sold out'; ?>
+                            </span>
+                            <?php if ($ticket['quantity'] && $ticket['status'] == 'available'): ?>
+                                <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 5px;">
+                                    <span id="available-<?php echo $index; ?>"><?php echo $ticket['quantity']; ?></span> tickets left
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             <?php $index++; endwhile; ?>
