@@ -1,6 +1,18 @@
 <?php
+session_start();
+
+// Function to check if user is logged in
+function isLoggedIn() {
+    return isset($_SESSION['user_id']);
+}
+
+function isAdmin() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+}
+
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,18 +29,33 @@
     <!-- Header Navigation -->
     <header>
         <nav class="navbar">
-            <a href="index.php" class="logo">Event Garden</a>
-            <ul class="nav-menu">
-                <li><a href="HomePage.html">Home</a></li>
-                <li><a href="#">Ticketing</a></li>
-                <li><a href="#">Browse Events</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="../Eventphp/Login.php" class="cta">Login</a>
-                <a href="../Eventphp/register.php" class="cta">Register</a>
-            </div>
-        </nav>
+            <a href="homePage.php" class="logo">Event Garden</a>
+<ul class="nav-menu">
+    <li><a href="homePage.php">Home</a></li>
+    
+    <?php if (isLoggedIn()): ?>
+        <?php if (isAdmin()): ?>
+            <!-- Show admin-specific link -->
+            <li><a href="allEventsAdmin.php">Browse Events (Admin)</a></li>
+        <?php else: ?>
+            <!-- Show customer-specific link -->
+            <li><a href="Dashboard.php">Browse Events</a></li>
+        <?php endif; ?>
+    <?php endif; ?>
+    
+    <li><a href="#">About</a></li>
+                    <div class="auth-buttons">
+            <?php if (isLoggedIn()): ?>
+                <!-- Show when user is logged in -->
+                <span class="welcome-text">Welcome, <?php echo htmlspecialchars(isset($_SESSION['username']) ? $_SESSION['username'] : 'User'); ?></span>
+                <a href="logout.php" class="cta">Logout</a>
+            <?php else: ?>
+                <!-- Show when user is not logged in -->
+                <a href="login.php"  class="cta" >Login</a>
+                <a href="register.php"   class="cta">Register</a>
+            <?php endif; ?>
+        </div>
+</ul>
     </header>
 
     <!-- Hero Section (Homepage Content) -->
@@ -37,8 +64,8 @@
             <h1>Welcome to Event Garden</h1>
             <p>Discover amazing events and book your tickets seamlessly</p>
             <div class="hero-buttons">
-                <a href="../Eventphp/DashBoard.php" class="btn-primary">Browse Events</a>
-                <a href="../Eventphp/register.php" class="btn-secondary">Get Started</a>
+                <a href="DashBoard.php" class="btn-primary">Browse Events</a>
+                <a href="register.php" class="btn-secondary">Get Started</a>
             </div>
         </div>
     </section>

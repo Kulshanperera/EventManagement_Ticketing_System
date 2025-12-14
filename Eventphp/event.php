@@ -62,10 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <header>
   <nav class="navbar">
-    <a href="#" class="logo">Event Garden</a>
+    <a href="homePage.php" class="logo">Event Garden</a>
     <ul>
-      <li><a href="HomePage.php">Home</a></li>
-      <li><a href="ViewEvents.php">Browse Events</a></li>
+      <li><a href="homePage.php">Home</a></li>
       <li><a href="#">About</a></li>
     <?php if (isLoggedIn()): ?>
     <?php if (isAdmin()): ?>

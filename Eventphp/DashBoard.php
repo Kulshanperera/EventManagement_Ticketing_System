@@ -40,11 +40,9 @@ $event_count = mysqli_num_rows($result);
 </head>
 <header>
   <nav class="navbar">
-    <a href="#" class="logo">Event Garden</a>
+    <a href="homePage.php" class="logo">Event Garden</a>
     <ul>
-      <li><a href="HomePage.html">Home</a></li>
-      <li><a href="#">Ticketing</a></li>
-      <li><a href="#">Browse Events</a></li>
+      <li><a href="homePage.php">Home</a></li>
       <li><a href="#">About</a></li>
     </ul>
     <a href="Logout.php" class="cta">Logout</a>

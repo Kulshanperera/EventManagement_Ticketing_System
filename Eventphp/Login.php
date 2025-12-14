@@ -1,18 +1,13 @@
 <?php
 require_once 'config.php';
 
-// // If already logged in, redirect to dashboard
 // if (isLoggedIn()) {
-//     redirect('dashboard.php');
+//     if (isAdmin()) {
+//         redirect('admin_dashboard.php');
+//     } else {
+//         redirect('index.php');
+//     }
 // }
-
-if (isLoggedIn()) {
-    if (isAdmin()) {
-        redirect('admin_dashboard.php');
-    } else {
-        redirect('index.php');
-    }
-}
 
 $errors = array();
 
@@ -43,9 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['role'] = $user['role'];
                 
                 if ($user['role'] == 'admin') {
-                    redirect('allEventsAdmin.php');
+                    redirect('homePage.php');
                 } else {
-                    redirect('DashBoard.php');
+                    redirect('homePage.php');
                 }
             } else {
                 $errors[] = "Invalid username or password";
@@ -161,28 +156,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body class="back">
-    <!-- Header Navigation -->
-    <!-- <header>
-        <nav class="navbar">
-            <a href="index.php" class="logo">Event Garden</a>
-            <ul class="nav-menu">
-                <li><a href="HomePage.html">Home</a></li>
-                <li><a href="#">Ticketing</a></li>
-                <li><a href="#">Browse Events</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="register.php" class="cta">Register</a>
-            </div>
-        </nav> -->
         <!-- Header Navigation -->
 <header>
     <nav class="navbar">
-        <a href="index.php" class="logo">Event Garden</a>
+        <a href="homePage.php" class="logo">Event Garden</a>
         <ul class="nav-menu">
-            <li><a href="../Eventhtml/HomePage.html">Home</a></li>
-            <li><a href="#">Ticketing</a></li>
-            <li><a href="#">Browse Events</a></li>
+            <li><a href="homePage.php">Home</a></li>
             <li><a href="#">About</a></li>
         </ul>
         <div class="auth-buttons">
@@ -193,25 +172,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <a href="logout.php" class="btn-logout">Logout</a>
             <?php else: ?>
                 <!-- Show when user is not logged in -->
-                <a href="login.php" class="btn-login">Login</a>
-                <a href="register.php" class="btn-register">Register</a>
+                <a href="register.php" class="cta">Register</a>
             <?php endif; ?>
         </div>
     </nav>
 </header>
     </header>
-
-    <!-- Hero Section (Homepage Content)
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Welcome to Event Garden</h1>
-            <p>Discover amazing events and book your tickets seamlessly</p>
-            <div class="hero-buttons">
-                <a href="events.php" class="btn-primary">Browse Events</a>
-                <a href="register.php" class="btn-secondary">Get Started</a>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Login Section -->
     <section class="login-section">

@@ -111,11 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <header>
   <nav class="navbar">
-    <a href="#" class="logo">Event Garden</a>
+    <a href="homePage.php" class="logo">Event Garden</a>
     <ul>
-      <li><a href="HomePage.html">Home</a></li>
-      <li><a href="#">Ticketing</a></li>
-      <li><a href="#">Browse Events</a></li>
+      <li><a href="homePage.php">Home</a></li>
       <li><a href="#">About</a></li>
       <li><a href="event.php">Create an event</a></li>
     </ul>

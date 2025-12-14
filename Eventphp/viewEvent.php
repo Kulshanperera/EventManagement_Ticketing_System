@@ -10,10 +10,58 @@ $event = mysqli_fetch_assoc($result);
 $ticket_sql = "SELECT * FROM tickets WHERE event_id = $event_id";
 $tickets = mysqli_query($conn, $ticket_sql);
 
+// // Determine back button URL based on user role
+// function isLoggedIn() {
+//     return isset($_SESSION['user_id']);
+// }
+
+// function isAdmin() {
+//     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+// }
+
 $back_url = 'DashBoard.php';
 if (isLoggedIn() && isAdmin()) {
     $back_url = 'allEventsAdmin.php';
 }
+
+// // Check if ID exists in URL
+// if (!isset($_GET['id']) || empty($_GET['id'])) {
+//     redirect('index.php');
+// }
+
+// $event_id = intval($_GET['id']); // Convert to integer for security
+
+// $sql = "SELECT * FROM events WHERE id = $event_id";
+// $result = mysqli_query($conn, $sql);
+
+// // Check if query was successful and event exists
+// if (!$result || mysqli_num_rows($result) == 0) {
+//     redirect('index.php');
+// }
+
+// $event = mysqli_fetch_assoc($result);
+
+// $ticket_sql = "SELECT * FROM tickets WHERE event_id = $event_id";
+// $tickets = mysqli_query($conn, $ticket_sql);
+
+// // Determine back button URL based on user role and referrer
+// $back_url = 'index.php';
+// $back_text = 'Events';
+
+// if (isLoggedIn() && isAdmin()) {
+//     // Check if admin came from dashboard or customer view
+//     if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'index.php') !== false) {
+//         $back_url = 'index.php';
+//         $back_text = 'Events';
+//     } else {
+//         $back_url = 'admin_dashboard.php';
+//         $back_text = 'Dashboard';
+//     }
+// } else {
+//     // Customer always goes back to events page
+//     $back_url = 'index.php';
+//     $back_text = 'Events';
+// }
 
 ?>
 
@@ -27,11 +75,9 @@ if (isLoggedIn() && isAdmin()) {
 </head>
 <header>
   <nav class="navbar">
-    <a href="#" class="logo">Event Garden</a>
+    <a href="homePage.php" class="logo">Event Garden</a>
     <ul>
-      <li><a href="HomePage.html">Home</a></li>
-      <li><a href="#">Ticketing</a></li>
-      <li><a href="#">Browse Events</a></li>
+      <li><a href="homePage.php">Home</a></li>
       <li><a href="#">About</a></li>
       <?php if (isLoggedIn()): ?>
     <?php if (isAdmin()): ?>

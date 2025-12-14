@@ -52,20 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_close($stmt);
     }
     
-    // Insert user if no errors
-    // if (empty($errors)) {
-    //     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    //     $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    //     $stmt = mysqli_prepare($conn, $insert_sql);
-    //     mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashed_password);
-        
-    //     if (mysqli_stmt_execute($stmt)) {
-    //         $success = "Registration successful! You can now login.";
-    //     } else {
-    //         $errors[] = "Registration failed. Please try again.";
-    //     }
-    //     mysqli_stmt_close($stmt);
-    // }
 
         if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -198,11 +184,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Header Navigation -->
     <header>
         <nav class="navbar">
-            <a href="index.php" class="logo">Event Garden</a>
+            <a href="homePage.php" class="logo">Event Garden</a>
             <ul class="nav-menu">
-                <li><a href="HomePage.html">Home</a></li>
-                <li><a href="#">Ticketing</a></li>
-                <li><a href="#">Browse Events</a></li>
+                <li><a href="homePage.php">Home</a></li>
                 <li><a href="#">About</a></li>
             </ul>
             <div class="auth-buttons">
@@ -211,17 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </nav>
     </header>
 
-    <!-- Hero Section (Homepage Content) -->
-    <!-- <section class="hero">
-        <div class="hero-content">
-            <h1>Join Event Garden</h1>
-            <p>Create an account to discover amazing events and book tickets seamlessly</p>
-            <div class="hero-buttons">
-                <a href="events.php" class="btn-primary">Browse Events</a>
-                <a href="#register" class="btn-secondary">Sign Up Now</a>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Register Section -->
     <section class="register-section" id="register">
