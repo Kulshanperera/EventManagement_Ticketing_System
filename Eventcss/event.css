@@ -12,7 +12,7 @@ body {
 .container {
   max-width: 900px;
   margin: 0 auto;
-  background: linear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
+  background: linear-gradient(135deg, rgb(231, 210, 253) 0%, rgb(152, 169, 247) 100%);
   padding: 30px;
   border-radius: 8px;
 }
@@ -38,7 +38,7 @@ h1 {
 .form-section {
   margin-bottom: 30px;
   padding: 20px;
-  background: inear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
+  background: inear-gradient(135deg, rgb(28, 20, 37) 0%, rgb(17, 19, 29) 100%);
   border-radius: 5px;
 }
 

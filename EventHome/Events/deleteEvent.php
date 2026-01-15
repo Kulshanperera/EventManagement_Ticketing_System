@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../Config/config.php';
 
 if (isset($_GET['id'])) {
     $event_id = $_GET['id'];
@@ -17,12 +17,12 @@ if (isset($_GET['id'])) {
         if ($event['image'] && file_exists($event['image'])) {
             unlink($event['image']);
         }
-        header("Location: allEventsAdmin.php?deleted=1");
+        header("Location: ../EventUsers/adminDashboard.php?deleted=1");
     }   else {
-        header("Location: allEventsAdmin.php?error=1");
+        header("Location: ../EventUsers/adminDashboard.php?error=1");
     }
     } else {
-        header("Location: allEventsAdmin.php");
+        header("Location: ../EventUsers/adminDashboard.php");
         }
 exit();
 ?>

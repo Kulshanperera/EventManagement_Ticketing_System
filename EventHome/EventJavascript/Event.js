@@ -107,31 +107,30 @@
         var quantities = {};
         var prices = {};
         var maxQuantities = {};
+        var ticketIds = {};
+         var eventId = '<?php echo $event_id; ?>';
         
-        function updateQty(index, change, price, maxQty) {
+        function updateQty(index, change, price, maxQty, ticketId) {
             if (!quantities[index]) quantities[index] = 0;
             if (!prices[index]) prices[index] = price;
             if (!maxQuantities[index]) maxQuantities[index] = maxQty;
+            if (!ticketIds[index]) ticketIds[index] = ticketId;
             
-            // Calculate new quantity
             var newQty = quantities[index] + change;
             
-            // Check if trying to go below 0
             if (newQty < 0) {
                 return;
             }
             
-            // Check if exceeding available tickets
             if (newQty > maxQuantities[index]) {
-                alert('Only ' + maxQuantities[index] + ' tickets available ');
-                // alert('Sorry! Only ' + maxQuantities[index] + ' tickets available for ' + getTicketName[ticket_name]);
+                var ticketName = document.querySelectorAll('.ticket-name')[index].textContent;
+                alert('Sorry! Only ' + maxQuantities[index] + ' tickets available for ' + ticketName);
                 return;
             }
             
             quantities[index] = newQty;
             document.getElementById('qty-' + index).textContent = quantities[index];
             
-            // Update available tickets display
             var availableElement = document.getElementById('available-' + index);
             if (availableElement) {
                 var remainingTickets = maxQuantities[index] - quantities[index];
@@ -140,16 +139,65 @@
             
             updateTotal();
         }
-        
-        function updateTotal() {
-            var totalTickets = 0;
-            var totalPrice = 0;
+        function proceedToCheckout() {
+    var totalTickets = 0;
+    for (var key in quantities) {
+        totalTickets += quantities[key];
+    }
+    
+    if (totalTickets == 0) {
+        alert('Please select at least one ticket!');
+        return;
+    }
+
+    console.log('Event ID:', eventId);        // ⬅️ ADD THIS LINE
+console.log('Quantities:', quantities);   // ⬅️ ADD THIS LINE
+console.log('Ticket IDs:', ticketIds); 
+    
+    // Create form with booking data
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'order_confirmation.php'; // ⬅️ CHANGED: Now goes to order_confirmation.php
+    
+    // Add event_id
+    var eventInput = document.createElement('input');
+    eventInput.type = 'hidden';
+    eventInput.name = 'event_id';
+    eventInput.value = eventId;
+    form.appendChild(eventInput);
+    
+    // Add each ticket as separate inputs
+    for (var key in quantities) {
+        if (quantities[key] > 0) {
+            // Ticket ID
+            var idInput = document.createElement('input');
+            idInput.type = 'hidden';
+            idInput.name = 'ticket_id[]'; // ⬅️ NEW: Array format
+            idInput.value = ticketIds[key];
+            form.appendChild(idInput);
             
-            for (var key in quantities) {
-                totalTickets += quantities[key];
-                totalPrice += quantities[key] * prices[key];
-            }
+            // Quantity
+            var qtyInput = document.createElement('input');
+            qtyInput.type = 'hidden';
+            qtyInput.name = 'quantity[]'; // ⬅️ NEW: Array format
+            qtyInput.value = quantities[key];
+            form.appendChild(qtyInput);
             
-            document.getElementById('totalTickets').textContent = totalTickets;
-            document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' LKR';
+            // Price
+            var priceInput = document.createElement('input');
+            priceInput.type = 'hidden';
+            priceInput.name = 'price[]'; // ⬅️ NEW: Array format
+            priceInput.value = prices[key];
+            form.appendChild(priceInput);
+            
+            ticketIndex++;
         }
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+
+    document.getElementById('printBtn').addEventListener('click', function() {
+    window.print();
+});
+}

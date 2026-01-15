@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once '../Config/config.php';
 
 $event_id = $_GET['id'];
 $message = '';
@@ -110,27 +110,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Admin - Create Event</title>
-    <link rel="stylesheet" href="../eventcss/HomePage.css">
-    <link rel="stylesheet" href="../eventcss/Event.css">
+    <link rel="stylesheet" href="../../eventcss/HomePage.css">
+    <link rel="stylesheet" href="../../eventcss/Event.css">
     <script src="../EventJavascript/Event.js"></script>
         <title>Edit Event</title>
 
 </head>
 <header>
   <nav class="navbar">
-    <a href="homePage.php" class="logo">Event Garden</a>
-    <ul>
-      <li><a href="homePage.php">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="event.php">Create an event</a></li>
-    </ul>
-    <a href="Logout.php" class="cta">Logout</a>
-  </nav>
+    <a href="../homePage.php" class="logo">Event Garden</a>
+        <div class="user-info">
+            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <a href="../homePage.php" class="browse-btn" class="browse-btn">Home</a>
+                        <?php if (isAdmin()): ?>
+                <a href="adminDashboard.php" class="browse-btn">Dashboard</a>
+                <?php endif; ?>
+            <a href="../help.php" class="browse-btn">Help</a>
+            <a href="../EventUsers/logout.php" class="browse-btn">Logout</a>
+        </div>
+  
 </header>
 <body class="back">
     <div class="container">
         <div class="nav">
-            <a href="allEventsAdmin.php">← Back to Events</a>
+            <a href="../EventUsers/adminDashboard.php">← Back to Events</a>
         </div>
         
         <h1>Edit Event</h1>
@@ -283,5 +286,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             document.getElementById('ticketContainer').insertAdjacentHTML('beforeend', html);
         }
     </script>
+        <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Event Garden. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -1,8 +1,14 @@
 <?php
-require_once 'config.php';
+require_once '../Config/config.php';
 
-$sql = "SELECT * FROM events ORDER BY created_at DESC";
+// Check if user is logged in
+if (!isLoggedIn()) {
+    redirect('login.php');
+}
+$sql = "SELECT * FROM events ORDER BY event_date DESC";
 $result = mysqli_query($conn, $sql);
+$username = $_SESSION['username'];
+$email = $_SESSION['email'];
 
 $message = '';
 if (isset($_GET['deleted'])) {
@@ -21,25 +27,31 @@ $result = mysqli_query($conn, $sql);
 // COUNT upcoming events
 $event_count = mysqli_num_rows($result);
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Events List</title>
-    <link rel="stylesheet" href="../eventcss/HomePage.css">
-    <link rel="stylesheet" href="../eventcss/allEvents.css">
-    <script src="../EventJavascript/Event.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Events</title>
+
+<link rel="stylesheet" href="../../Eventcss/homePage.css">
+    <link rel="stylesheet" href="../../Eventcss/allEvents.css">
+    <link rel="stylesheet" href="../../Eventcss/adminDashboard.css">
+    <script src="../../EventJavascript/Event.js"></script>
 </head>
 <header>
   <nav class="navbar">
-    <a href="homePage.php" class="logo">Event Garden</a>
-    <ul>
-      <li><a href="homePage.php">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="event.php">Create an event</a></li>
-    </ul>
-    <a href="Logout.php" class="cta">Logout</a>
-  </nav>
+    <a href="../homePage.php" class="logo">Event Garden</a>
+        <div class="user-info">
+            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <a href="../homePage.php" class="browse-btn">Home</a>
+                        <?php if (isAdmin()): ?>
+                <a href="adminDashboard.php" class="browse-btn">Dashboard</a>
+                <?php endif; ?>
+            <a href="../help.php" class="browse-btn">Help</a>
+            <a href="../EventUsers/logout.php" class="browse-btn">Logout</a>
+        </div>
+  
 </header>
 <body class="back">
     <div class="container">
@@ -53,11 +65,12 @@ $event_count = mysqli_num_rows($result);
         <?php if (mysqli_num_rows($result) > 0): ?>
         <div class="event-grid">
             <?php while ($event = mysqli_fetch_assoc($result)): ?>
+                <a href="viewEvent.php?id=<?php echo $event['id']; ?>" >
                 <div class="event-card">
                     <?php if ($event['image']): ?>
                         <img src="<?php echo $event['image']; ?>" alt="Event Image">
                     <?php else: ?>
-                        <img src="Eventimages/DefaultEvent.jpg" alt="Event Image">
+                        <img src="Eventimages/DefaultEvent.jpg" alt="DefualtEvent Image">
                     <?php endif; ?>
                     
                     <div class="event-content">
@@ -65,14 +78,12 @@ $event_count = mysqli_num_rows($result);
                         <p class="event-info">📅 <?php echo date('F d, Y', strtotime($event['event_date'])); ?></p>
                         <p class="event-info">🕐 <?php echo date('g:i A', strtotime($event['event_time'])); ?></p>
                         <p class="event-info">📍 <?php echo $event['location']; ?></p>
-                        <p class="event-info">🖊 <?php $desc = $event['description']; 
+                        <p class="event-info">🖊 <?php $desc = $event['summary']; 
                         echo strlen($desc) > 100 ? substr($desc, 0, 100) . "..." : $desc;?></p>
-                        <a href="viewEvent.php?id=<?php echo $event['id']; ?>" class="btn-view">View Event</a>
-                        <a href="editEvent.php?id=<?php echo $event['id']; ?>" class="btn-view">Edit Event</a>
-                        <button class="btn-delete" onclick="deleteEvent(<?php echo $event['id']; ?>, 
-                        '<?php echo addslashes($event['title']); ?>')">Remove</button>
+                        
                     </div>
                 </div>
+                </a>
             <?php endwhile; ?>
             <?php else: ?>
              <div class="no-events">
@@ -86,7 +97,7 @@ $event_count = mysqli_num_rows($result);
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>&copy; 2025 Event Garden. All rights reserved.</p>
+            <p>&copy; 2026 Event Garden. All rights reserved.</p>
         </div>
     </footer>
 </body>

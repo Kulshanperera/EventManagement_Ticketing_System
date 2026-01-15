@@ -42,7 +42,7 @@ h1 {
 
 .event-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex; /* Flex column for full height consistency */
@@ -62,7 +62,7 @@ h1 {
 }
 
 .event-title {
-  font-size: 20px;
+  font-size: 25px;
   color: #333;
   margin-bottom: 10px;
 }

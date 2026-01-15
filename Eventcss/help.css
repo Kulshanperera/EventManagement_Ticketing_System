@@ -1,0 +1,193 @@
+    /* Additional styles for help page */
+    .help-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+    
+    .help-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .help-header h1 {
+        color: #333;
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+    
+    .help-header p {
+        color: #ffffff;
+        font-size: 18px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .sections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+    
+    .section-card {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .section-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .section-card h2 {
+        color: #0daf1b;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #3498db;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .section-card ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .section-card li {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .section-card li:last-child {
+        border-bottom: none;
+    }
+    
+    .contact-info {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        margin-top: 30px;
+    }
+    
+    .contact-info h2 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+    
+    .contact-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .contact-item {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    .contact-item h3 {
+        color: #3498db;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .contact-item p {
+        color: #555;
+        margin: 10px 0;
+    }
+    
+    .email-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .email-link:hover {
+        text-decoration: underline;
+    }
+    
+    .emergency {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+    }
+    
+    .icon {
+        font-size: 24px;
+    }
+    
+    .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+    }
+    
+    .quick-link {
+        padding: 12px 25px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    
+    .quick-link:hover {
+        background: #2980b9;
+    }
+    
+    .business-hours {
+        margin-top: 30px;
+        padding: 20px;
+        background: #e8f4fc;
+        border-radius: 8px;
+    }
+    
+    .business-hours table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    
+    .business-hours th, .business-hours td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .business-hours th {
+        background: #c4b70c;
+        color: white;
+    }
+    
+    .business-hours tr:hover {
+        background: #f1f9ff;
+    }
+    
+    @media (max-width: 768px) {
+        .help-container {
+            padding: 0 15px;
+        }
+        
+        .section-card {
+            padding: 20px;
+        }
+        
+        .contact-info {
+            padding: 20px;
+        }
+    }

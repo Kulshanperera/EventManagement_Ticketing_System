@@ -1,9 +1,9 @@
 <?php
-require_once 'config.php';
+require_once '../Config/config.php';
 
 // If already logged in, redirect to dashboard
 if (isLoggedIn()) {
-    redirect('dashboard.php');
+    redirect('dashBoard.php');
 }
 
 $errors = array();
@@ -76,122 +76,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Garden - Register</title>
-    <link rel="stylesheet" href="../eventcss/HomePage.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #f4f4f4ff; 
-            min-height: 100vh;
-        }
-        
-        /* Register Form Styles */
-        .register-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 40px 20px;
-        }
-        
-        .register-container { 
-            background: linear-gradient(135deg, #cda1fdff 0%, #6781f8ff 100%);
-            padding: 30px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 400px; 
-        }
-        
-        .register-container h2 { 
-            margin-bottom: 20px; 
-            color: #333; 
-            text-align: center; 
-        }
-        
-        .form-group { 
-            margin-bottom: 15px; 
-        }
-        
-        label { 
-            display: block; 
-            margin-bottom: 5px; 
-            color: #555; 
-            font-weight: bold; 
-        }
-        
-        input { 
-            width: 100%; 
-            padding: 10px; 
-            border: 1px solid #cb0df1ff; 
-            border-radius: 4px; 
-            font-size: 14px; 
-        }
-        
-        input:focus { 
-            outline: none; 
-            border-color: #4CAF50; 
-        }
-        
-        button { 
-            width: 100%; 
-            padding: 12px; 
-            background: #4CAF50; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            font-weight: bold; 
-        }
-        
-        button:hover { 
-            background: #45a049; 
-        }
-        
-        .error { 
-            background: #f44336; 
-            color: white; 
-            padding: 10px; 
-            border-radius: 4px; 
-            margin-bottom: 15px; 
-        }
-        
-        .success { 
-            background: #4CAF50; 
-            color: white; 
-            padding: 10px; 
-            border-radius: 4px; 
-            margin-bottom: 15px; 
-        }
-        
-        .link { 
-            text-align: center; 
-            margin-top: 15px; 
-        }
-        
-        .link a { 
-            color: #4CAF50; 
-            text-decoration: none; 
-        }
-        
-        .link a:hover { 
-            text-decoration: underline; 
-        }
-    </style>
+    <link rel="stylesheet" href="../../Eventcss/homePage.css">
+    <link rel="stylesheet" href="../../Eventcss/register.css">
 </head>
 <body class="back">
     <!-- Header Navigation -->
     <header>
         <nav class="navbar">
-            <a href="homePage.php" class="logo">Event Garden</a>
-            <ul class="nav-menu">
-                <li><a href="homePage.php">Home</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="login.php" class="cta">Login</a>
-            </div>
+            <a href="../homePage.php" class="logo">Event Garden</a>
         </nav>
     </header>
 
@@ -246,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>&copy; 2025 Event Garden. All rights reserved.</p>
+            <p>&copy; 2026 Event Garden. All rights reserved.</p>
         </div>
     </footer>
 </body>
