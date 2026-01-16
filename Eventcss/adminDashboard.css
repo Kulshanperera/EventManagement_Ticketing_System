@@ -45,6 +45,10 @@ body {
     border-radius: 4px;
 }
 
+.navbar a.logout {
+    background: #dc3545;
+}
+
 .navbar a:hover {
     background: #c82333;
 }
@@ -168,31 +172,4 @@ h2 {
 
 .btn-delete:hover {
     background: #c82333;
-}
-
-.no-events {
-    text-align: center;
-    padding: 60px 20px;
-    background: white;
-    border-radius: 8px;
-}
-
-.no-events p {
-    font-size: 20px;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.btn-create {
-    display: inline-block;
-    padding: 12px 30px;
-    background: #28a745;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.btn-create:hover {
-    background: #218838;
 }

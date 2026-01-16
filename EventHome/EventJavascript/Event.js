@@ -197,7 +197,4 @@ console.log('Ticket IDs:', ticketIds);
     document.body.appendChild(form);
     form.submit();
 
-    document.getElementById('printBtn').addEventListener('click', function() {
-    window.print();
-});
 }

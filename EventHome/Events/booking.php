@@ -36,7 +36,7 @@ $tickets = mysqli_query($conn, $tickets_sql);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Booking Confirmed</title>
+    <title>Booking Confirmed <?php echo $booking['booking_reference']; ?></title>
     <link rel="stylesheet" href="../../Eventcss/booking.css">
     <link rel="stylesheet" href="../../Eventcss/homePage.css">
     <script src="../EventJavascript/Event.js"></script>
@@ -49,17 +49,17 @@ $tickets = mysqli_query($conn, $tickets_sql);
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>
             <?php if (isAdmin()): ?>
-                <a href="adminDashboard.php class="browse-btn">Dashboard</a>
+                <a href="../EventsUsers/adminDashboard.php" class="browse-btn">Dashboard</a>
                 <?php endif; ?>
             <a href="../help.php" class="browse-btn">Help</a>
-            <a href="../EventUsers/logout.php" class="browse-btn">Logout</a>
+            <a href="../EventUsers/logout.php" class="logout">Logout</a>
         </div>
-  
+  </nav>
 </header>
 <body class="back">
     <div class="container">
         <div class="success-card">
-            <button id="printBtn" class="btn-dashboard">Print</button>
+            <button onclick="window.print()" id="printBtn" class="btn-dashboard">Print</button>
             <div class="success-icon">✅</div>
             <h1>Booking Confirmed!</h1>
             <p style="color: #666; font-size: 16px;">Your tickets have been successfully booked</p>

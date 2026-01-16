@@ -178,6 +178,9 @@ ul li a:hover {
     background: #e0b845;
     transform: translateY(-2px);
 }
+.navbar a:hover {
+    background: #c82333;
+}
 
 .btn-secondary {
     background: transparent;
@@ -269,6 +272,16 @@ footer {
     line-height: 1.6;
 }
 
+
+.browse-btn {
+    background: #28a745;
+    margin-right: 10px;
+}
+
+.browse-btn:hover {
+    background: #218838;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .features-content h2 {
@@ -292,4 +305,5 @@ footer {
         width: 200px;
         text-align: center;
     }
+
 }

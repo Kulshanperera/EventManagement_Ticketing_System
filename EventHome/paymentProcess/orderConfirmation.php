@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 // Check POST data
 if (!isset($_POST['event_id'])) {
     echo "<h3>Error: No event_id received</h3>";
-    echo "<a href='dashBoard.php'>Back to Dashboard</a>";
+    echo "<a href='../Events/dashBoard.php'>Back to Dashboard</a>";
     exit();
 }
 
@@ -40,7 +40,7 @@ if (!$event_result) {
 if (mysqli_num_rows($event_result) == 0) {
     echo "<h3>Error: Event not found</h3>";
     echo "<p>Event ID: $event_id</p>";
-    echo "<a href='dashBoard.php'>Back to Dashboard</a>";
+    echo "<a href='../Events/dashBoard.php'>Back to Dashboard</a>";
     exit();
 }
 
@@ -76,7 +76,7 @@ for ($i = 0; $i < count($ticket_ids); $i++) {
 
 if (count($order_items) == 0) {
     echo "<h3>Error: No valid tickets found</h3>";
-    echo "<a href='dashBoard.php'>Back to Dashboard</a>";
+    echo "<a href='../Events/dashBoard.php'>Back to Dashboard</a>";
     exit();
 }
 ?>
@@ -87,21 +87,19 @@ if (count($order_items) == 0) {
     <title>Order Confirmation</title>
 <link rel="stylesheet" href="../../Eventcss/orderConfirmation.css">
 <link rel="stylesheet" href="../../Eventcss/homePage.css">
-<link rel="stylesheet" href="../../Eventcss/adminDashboard.css">
 </head>
 <header>
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
-        <h1>Admin Dashboard</h1>
         <div class="user-info">
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>            <?php if (isAdmin()): ?>
-                <a href="adminDashboard.php">Dashboard</a>
+                <a href="../EventUsers/adminDashboard.php">Dashboard</a>
                 <?php endif; ?>
             <a href="help.php" class="browse-btn">Help</a>
-            <a href="logout.php">Logout</a>
+            <a href="logout.php" class="logout">Logout</a>
         </div>
-  
+  </nav>
 </header>
 <body class="back">
 

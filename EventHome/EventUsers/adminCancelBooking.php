@@ -5,6 +5,74 @@ if (!isLoggedIn() || !isAdmin()) {
     redirect('login.php');
 }
 
+if (!isset($_GET['ref'])) {
+    redirect('adminBookings.php');
+}
+
+$booking_reference = mysqli_real_escape_string($conn, $_GET['ref']);
+
+// Get booking details
+$sql = "SELECT * FROM bookings WHERE booking_reference = '$booking_reference' AND booking_status = 'confirmed'";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 0) {
+    redirect('adminBookings.php');
+}
+
+$booking = mysqli_fetch_assoc($result);
+
+// Start transaction
+mysqli_begin_transaction($conn);
+
+try {
+    // Get all tickets for this booking
+    $tickets_sql = "SELECT ticket_id, quantity FROM booking_tickets WHERE booking_id = {$booking['id']}";
+    $tickets_result = mysqli_query($conn, $tickets_sql);
+    
+    // Return tickets to inventory
+    while ($ticket = mysqli_fetch_assoc($tickets_result)) {
+        $ticket_id = $ticket['ticket_id'];
+        $quantity = $ticket['quantity'];
+        
+        // Add back to ticket quantity
+        $update_sql = "UPDATE tickets SET quantity = quantity + $quantity WHERE id = $ticket_id AND quantity IS NOT NULL";
+        mysqli_query($conn, $update_sql);
+        
+        // Check if ticket should be marked as available again
+        $check_sql = "SELECT quantity, status FROM tickets WHERE id = $ticket_id";
+        $check_result = mysqli_query($conn, $check_sql);
+        $ticket_data = mysqli_fetch_assoc($check_result);
+        
+        if ($ticket_data['quantity'] > 0 && $ticket_data['status'] == 'sold-out') {
+            $available_sql = "UPDATE tickets SET status = 'available' WHERE id = $ticket_id";
+            mysqli_query($conn, $available_sql);
+        }
+    }
+    
+    // Mark booking as cancelled
+    $cancel_sql = "UPDATE bookings SET booking_status = 'cancelled', cancelled_at = NOW() WHERE id = {$booking['id']}";
+    
+    if (!mysqli_query($conn, $cancel_sql)) {
+        throw new Exception("Failed to cancel booking");
+    }
+    
+    mysqli_commit($conn);
+    redirect('adminBookings.php?msg=cancelled');
+    
+} catch (Exception $e) {
+    mysqli_rollback($conn);
+    redirect('adminBookings.php?msg=error');
+}
+?>
+
+-- admin_users.php
+<?php
+require_once 'config.php';
+
+if (!isLoggedIn() || !isAdmin()) {
+    redirect('login.php');
+}
+
 $message = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == 'deactivated') {
@@ -25,18 +93,17 @@ $result = mysqli_query($conn, $sql);
 <html>
 <head>
     <title>Manage Users</title>
-    <link rel="stylesheet" href="../../Eventcss/adminUsers.css">
-    <link rel="stylesheet" href="../../Eventcss/homePage.css">
+ <link rel="stylesheet" href="../../Eventcss/adminCancelBooking.css">
+ <link rel="stylesheet" href="../../Eventcss/homePage.css">
 </head>
-<body class="back">
-
+ <body class="back">
     <nav class="navbar">
-         <a href="../homePage.php" class="logo">Event Garden</a>
+        <a href="../homePage.php" class="logo">Event Garden</a>
         <h1>User Management</h1>
         <div class="user-info">
             <span class="badge">ADMIN</span>
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-            <a href="adminDashboard.php"  class="browse-btn">Dashboard</a>
+            <a href="adminDashboard.php">Dashboard</a>
             <a href="logout.php" class="logout">Logout</a>
         </div>
     </nav>
@@ -51,7 +118,6 @@ $result = mysqli_query($conn, $sql);
         $admin_count = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM users WHERE role='admin'"));
         $customer_count = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM users WHERE role='customer'"));
         $active_count = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM users WHERE status='active'"));
-        $event_count = mysqli_num_rows(mysqli_query($conn, "SELECT id FROM events"));
         ?>
         
         <div class="stats">
@@ -70,10 +136,6 @@ $result = mysqli_query($conn, $sql);
             <div class="stat-card">
                 <h3>Active Users</h3>
                 <div class="number"><?php echo $active_count; ?></div>
-            </div>
-            <div class="stat-card">
-                <h3>Total Events</h3>
-                <div class="number"><?php echo $event_count; ?></div>
             </div>
         </div>
         
@@ -114,14 +176,14 @@ $result = mysqli_query($conn, $sql);
                             <td>
                                 <?php if ($user['id'] != $_SESSION['user_id']): ?>
                                     <?php if ($user['status'] == 'active'): ?>
-                                        <a href="adminUserAction.php?action=deactivate&id=<?php echo $user['id']; ?>" 
+                                        <a href="admin_user_action.php?action=deactivate&id=<?php echo $user['id']; ?>" 
                                            class="btn btn-deactivate" 
                                            onclick="return confirm('Deactivate this user?')">Deactivate</a>
                                     <?php else: ?>
-                                        <a href="adminUserAction.php?action=activate&id=<?php echo $user['id']; ?>" 
+                                        <a href="admin_user_action.php?action=activate&id=<?php echo $user['id']; ?>" 
                                            class="btn btn-activate">Activate</a>
                                     <?php endif; ?>
-                                    <a href="adminUserAction.php?action=delete&id=<?php echo $user['id']; ?>" 
+                                    <a href="admin_user_action.php?action=delete&id=<?php echo $user['id']; ?>" 
                                        class="btn btn-delete" 
                                        onclick="return confirm('Delete this user permanently?')">Delete</a>
                                 <?php else: ?>
@@ -134,11 +196,5 @@ $result = mysqli_query($conn, $sql);
             </table>
         </div>
     </div>
-        <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 Event Garden. All rights reserved.</p>
-        </div>
-    </footer>
 </body>
 </html>

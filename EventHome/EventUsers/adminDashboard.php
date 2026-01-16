@@ -6,7 +6,7 @@ if (!isLoggedIn()) {
 }
 
 if (!isAdmin()) {
-    redirect('index.php');
+    redirect('adminDashboard.php');
 }
 
 $message = '';
@@ -28,15 +28,16 @@ $result = mysqli_query($conn, $sql);
 <link rel="stylesheet" href="../../Eventcss/homePage.css">
 </head>
 <header>
-    <div class="navbar">
+    <nav class="navbar">
          <a href="../homePage.php" class="logo">Event Garden</a>
         <h1>Admin Dashboard</h1>
         <div class="user-info">
             <span class="badge">ADMIN</span>
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-            <a href="logout.php">Logout</a>
+            <a href="../homePage.php" class="browse-btn">Home</a>
+            <a href="logout.php" class="logout">Logout</a>
         </div>
-    </div>
+    </nav>
 </header>
   <body class="back">
 
@@ -44,6 +45,7 @@ $result = mysqli_query($conn, $sql);
         <div class="nav">
             <a href="../Events/event.php">+ Create New Event</a>
             <a href="adminUsers.php">👥 Manage Users</a>
+            <a href="adminBookings.php">📋 Manage Bookings</a>
             <a href="../Events/dashBoard.php">View as Customer</a>
         </div>
         

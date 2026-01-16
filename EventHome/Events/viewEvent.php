@@ -11,9 +11,9 @@ $event = mysqli_fetch_assoc($result);
 $ticket_sql = "SELECT * FROM tickets WHERE event_id = $event_id";
 $tickets = mysqli_query($conn, $ticket_sql);
 
-$back_url = 'DashBoard.php';
+$back_url = 'dashBoard.php';
 if (isLoggedIn() && isAdmin()) {
-    $back_url = 'allEventsAdmin.php';
+    $back_url = '../EventUsers/adminDashboard.php';
 }
 
 ?>
@@ -24,8 +24,6 @@ if (isLoggedIn() && isAdmin()) {
     <title><?php echo $event['title']; ?></title>
     <link rel="stylesheet" href="../../Eventcss/homePage.css">
     <link rel="stylesheet" href="../../Eventcss/viewEvent.css">
-    <link rel="stylesheet" href="../../Eventcss/adminDashboard.css">
-    <script src="../../EventJavascript/Event.js"></script>
     <!-- <script src="../EventJavascript/Event.js"><script> -->
    <script>
     var quantities = {};
@@ -134,13 +132,13 @@ if (isLoggedIn() && isAdmin()) {
     <a href="../homePage.php" class="logo">Event Garden</a>
         <div class="user-info">
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-            <a href="../homePage.php" class="browse-btn">Help</a>            <?php if (isAdmin()): ?>
-                <a href="adminDashboard.php" class="browse-btn">Dashboard</a>
+            <a href="../homePage.php" class="browse-btn">Home</a>            <?php if (isAdmin()): ?>
+                <a href="../EventUsers/adminDashboard.php" class="browse-btn">Dashboard</a>
                 <?php endif; ?>
             <a href="../help.php" class="browse-btn">About</a>
-            <a href="../EventUsers/logout.php" class="browse-btn">Logout</a>
+            <a href="../EventUsers/logout.php" class="logout">Logout</a>
         </div>
-  
+    </nav>
 </header>
 <body class="back">
 

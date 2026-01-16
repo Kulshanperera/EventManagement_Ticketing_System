@@ -35,16 +35,15 @@ $event = mysqli_fetch_assoc($event_result);
 <header>
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
-        <h1>Admin Dashboard</h1>
         <div class="user-info">
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>            <?php if (isAdmin()): ?>
-                <a href="adminDashboard.php">Dashboard</a>
+                <a href="../EventUsers/adminDashboard.php">Dashboard</a>
                 <?php endif; ?>
             <a href="help.php" class="browse-btn">Help</a>
-            <a href="logout.php">Logout</a>
+            <a href="logout.php" class="logout" >Logout</a>
         </div>
-  
+  </nav>
 </header>
 <body class="back">
     <title>Payment</title>

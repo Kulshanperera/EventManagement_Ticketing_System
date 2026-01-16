@@ -64,6 +64,7 @@ if (mysqli_num_rows($result) > 0) {
 <header>
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
+</nav>
 </header>
 <body class="back">
     <div class="container">

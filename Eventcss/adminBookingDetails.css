@@ -1,0 +1,131 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.navbar a.logout {
+    background: #dc3545;
+}
+.navbar .user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.details-card {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.navbar .badge {
+    background: #ffc107;
+    color: #1a1a1a;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.status-confirmed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.info-section {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.info-section:last-child {
+    border-bottom: none;
+}
+
+.info-section h2 {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.info-row {
+    display: flex;
+    padding: 10px 0;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #666;
+    width: 150px;
+}
+
+.info-value {
+    color: #333;
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #e9ecef;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.btn-cancel {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.btn-cancel:hover {
+    background: #c82333;
+}

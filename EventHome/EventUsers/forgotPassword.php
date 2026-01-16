@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <header>
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
+    </nav>
 </header>
 <body class="back">
     <div class="container">

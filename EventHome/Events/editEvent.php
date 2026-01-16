@@ -123,12 +123,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
             <a href="../homePage.php" class="browse-btn" class="browse-btn">Home</a>
                         <?php if (isAdmin()): ?>
-                <a href="adminDashboard.php" class="browse-btn">Dashboard</a>
+                <a href="../EventUsers/adminDashboard.php" class="browse-btn">Dashboard</a>
                 <?php endif; ?>
             <a href="../help.php" class="browse-btn">Help</a>
-            <a href="../EventUsers/logout.php" class="browse-btn">Logout</a>
+            <a href="../EventUsers/logout.php" class="logout">Logout</a>
         </div>
-  
+  </nav>
 </header>
 <body class="back">
     <div class="container">

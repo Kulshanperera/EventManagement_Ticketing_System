@@ -33,9 +33,9 @@ function isAdmin() {
         <?php if (isLoggedIn()): ?>
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
             <a href="homePage.php" class="browse-btn">Home</a>
-            <a href="help.php" class="browse-btn">Help</a>
-            <a href="EventUsers/logout.php" class="browse-btn">Logout</a>
+            <a href="EventUsers/logout.php" class="logout">Logout</a>
         <?php endif; ?>
+                    <a href="help.php" class="browse-btn">Help</a>
         </div>
     </nav>
 </header>
