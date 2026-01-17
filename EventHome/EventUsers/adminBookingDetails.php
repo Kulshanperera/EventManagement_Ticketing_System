@@ -128,7 +128,7 @@ $tickets = mysqli_query($conn, $tickets_sql);
             </div>
             
             <?php if ($booking['booking_status'] == 'confirmed'): ?>
-                <a href="admin_cancel_booking.php?ref=<?php echo $booking['booking_reference']; ?>" 
+                <a href="adminCancelBooking.php?ref=<?php echo $booking['booking_reference']; ?>" 
                    class="btn-cancel" 
                    onclick="return confirm('Cancel this booking and return tickets to inventory?')">
                     Cancel This Booking
