@@ -46,7 +46,7 @@ $tickets = mysqli_query($conn, $tickets_sql);
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
         <div class="user-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>
             <?php if (isAdmin()): ?>
                 <a href="../EventsUsers/adminDashboard.php" class="browse-btn">Dashboard</a>

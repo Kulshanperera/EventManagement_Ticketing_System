@@ -92,7 +92,7 @@ if (count($order_items) == 0) {
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
         <div class="user-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>            <?php if (isAdmin()): ?>
                 <a href="../EventUsers/adminDashboard.php">Dashboard</a>
                 <?php endif; ?>
@@ -112,7 +112,7 @@ if (count($order_items) == 0) {
             
             <div class="customer-info">
                 <p><strong>Customer Email:</strong> <?php echo htmlspecialchars($_SESSION['email']); ?></p>
-                <p><strong>Customer Name:</strong> <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                <p><strong>Customer Name:</strong> <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></p>
             </div>
             
             <div class="event-section">

@@ -43,7 +43,7 @@ $event_count = mysqli_num_rows($result);
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
         <div class="user-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>
                         <?php if (isAdmin()): ?>
                 <a href="../EventUsers/adminDashboard.php" class="browse-btn">Dashboard</a>
@@ -85,11 +85,13 @@ $event_count = mysqli_num_rows($result);
                 </div>
                 </a>
             <?php endwhile; ?>
-            <?php else: ?>
-             <div class="no-events">
-                <p>📅 No events available at the moment</p>
-                <a href="event.php" class="btn-create">Create Your First Event</a>
-             </div>
+            <?php else: ?>          
+                    <div class="no-events">
+                        <p>📅 No events available at the moment</p>
+                      <?php if (isAdmin()): ?>
+                        <a href="event.php" class="btn-create">Create Your First Event</a>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>    

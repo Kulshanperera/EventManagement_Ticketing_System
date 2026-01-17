@@ -112,3 +112,18 @@ button:hover {
     margin-bottom: 20px;
     font-size: 13px;
 }
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+}

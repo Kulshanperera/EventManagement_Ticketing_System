@@ -15,10 +15,10 @@ require_once '../Config/config.php';
 </head>
 <body class="back">
   <nav class="navbar">
-    <a href="homePage.php" class="logo">Event Garden</a>
+    <a href="../homePage.php" class="logo">Event Garden</a>
        <div class="user-info">
-            <a href="homePage.php" class="browse-btn">Home</a>
-            <a href="help.php" class="browse-btn">About</a>
+            <a href="../homePage.php" class="browse-btn">Home</a>
+            <a href="../help.php" class="browse-btn">About</a>
         </div>
     </nav>
 <?php

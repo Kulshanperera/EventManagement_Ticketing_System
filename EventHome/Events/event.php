@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
         <div class="user-info">
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>         
                         <?php if (isAdmin()): ?>
                 <a href="../EventUsers/adminDashboard.php" class="browse-btn">Dashboard</a>
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Event Image </label>
                     <input type="file" name="image" id="image" accept="image/*">
-                    <button type="button" class="clearButton" id="clearImage">clear</button>
+                    <button type="button" class="clearButton" id="clearImage">X</button>
                 </div>
             </div> 
         </div>

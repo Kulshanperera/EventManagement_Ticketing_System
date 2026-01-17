@@ -33,7 +33,7 @@ $result = mysqli_query($conn, $sql);
         <h1>Admin Dashboard</h1>
         <div class="user-info">
             <span class="badge">ADMIN</span>
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="../homePage.php" class="browse-btn">Home</a>
             <a href="logout.php" class="logout">Logout</a>
         </div>

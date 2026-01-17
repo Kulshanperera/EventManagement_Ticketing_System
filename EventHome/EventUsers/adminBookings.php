@@ -41,7 +41,7 @@ $total_revenue = isset($revenue_result['total']) ? $revenue_result['total'] : 0;
         <h1>Booking Management</h1>
         <div class="user-info">
             <span class="badge">ADMIN</span>
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="adminDashboard.php">Dashboard</a>
             <a href="logout.php" class="logout">Logout</a>
         </div>

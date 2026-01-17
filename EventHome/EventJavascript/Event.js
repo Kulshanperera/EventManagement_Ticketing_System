@@ -198,3 +198,9 @@ console.log('Ticket IDs:', ticketIds);
     form.submit();
 
 }
+
+function togglePassword() {
+    const passwordField = document.getElementById("password");
+    passwordField.type =
+    passwordField.type === "password" ? "text" : "password";
+}

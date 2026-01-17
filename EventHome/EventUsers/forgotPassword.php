@@ -20,22 +20,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         
-        if (mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-            $token = bin2hex(random_bytes(32));
-            $expiry = date('Y-m-d H:i:s', strtotime('+8 hours'));
-            
-            $update_sql = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?";
-            $stmt = mysqli_prepare($conn, $update_sql);
-            mysqli_stmt_bind_param($stmt, "ssi", $token, $expiry, $user['id']);
-            mysqli_stmt_execute($stmt);
-            
-            $reset_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/resetPassword.php?token=" . $token;
-            
-            $message = "Password reset instructions sent! <br><br>Reset link: <a href='$reset_link' target='_blank'>$reset_link</a>";
-        } else {
-            $message = "If an account exists with that email, a reset link has been sent.";
-        }
+if (mysqli_num_rows($result) > 0) {
+    $user = mysqli_fetch_assoc($result);
+    $token = bin2hex(random_bytes(32));
+    $expiry = date('Y-m-d H:i:s', strtotime('+8 hours'));
+    
+    $update_sql = "UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $update_sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $token, $expiry, $user['id']);
+    mysqli_stmt_execute($stmt);
+    
+    $reset_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/resetPassword.php?token=" . $token;
+    
+    $message = "
+    <div class='alert alert-success'>
+        <strong>✅ Success!</strong> Password reset link generated.
+    </div>
+    
+    <div class='link-card'>
+        <div class='link-content'>
+            <span class='link-label'>Reset Link:</span>
+            <div class='link-text'>$reset_link</div>
+        </div>
+        
+        <div class='link-actions'>
+            <a href='$reset_link' class='btn btn-primary' target='_blank'>
+                <i class='icon-link'> Open </i>
+            </a>
+            <button class='btn btn-secondary' onclick='copyLink()'>
+                <i class='icon-copy'>Copy</i> 
+            </button>
+        </div>
+        
+        <div class='link-note'>
+            <i class='icon-clock'></i> Expires in 8 hours
+        </div>
+    </div>
+    
+    <script>
+    function copyLink() {
+        const link = '$reset_link';
+        navigator.clipboard.writeText(link);
+        alert('Link copied to clipboard!');
+    }
+    </script>";
+} else {
+    $message = "<div class='alert alert-info'>If an account exists with that email, a reset link has been sent.</div>";
+}
     }
 }
 ?>

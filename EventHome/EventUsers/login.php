@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Event Garden - Register</title>
     <link rel="stylesheet" href="../../Eventcss/homePage.css">
     <link rel="stylesheet" href="../../Eventcss/login.css">
+     <script src="../EventJavascript/Event.js"></script>
 </head>
 <body class="back">
     <!-- Header Navigation -->
@@ -80,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <strong>Acounts:</strong><br>
             Admin - Username: admin<br>
             Admin - Password: admin123<br>
-            Or register as a customer
         <div class="link">
             Don't have an admin account? <a href="createAdmin.php">Create here</a>
         </div>
@@ -102,7 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" required>
+                <div class="password-wrapper">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">👁</span>
+                </div>
                 <div class="forgot-link">
                     <a href="forgotPassword.php">Forgot Password?</a>
                 </div>

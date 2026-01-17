@@ -61,6 +61,7 @@ if (mysqli_num_rows($result) > 0) {
         <link rel="stylesheet" href="../../Eventcss/adminDashboard.css">
          <link rel="stylesheet" href="../../Eventcss/forgotPassword.css">
              <link rel="stylesheet" href="../../Eventcss/homePage.css">
+                  <script src="../EventJavascript/Event.js"></script>
 <header>
   <nav class="navbar">
     <a href="../homePage.php" class="logo">Event Garden</a>
@@ -82,11 +83,12 @@ if (mysqli_num_rows($result) > 0) {
     <?php if ($valid_token && !$success): ?>
         <form method="POST">
             <label>New Password:</label>
+
             <input type="password" name="password" required>
-            
+            <div class="password-wrapper">
             <label>Confirm Password:</label>
             <input type="password" name="confirm_password" required>
-            
+            </div>
             <button type="submit">Reset Password</button>
         </form>
     <?php endif; ?>

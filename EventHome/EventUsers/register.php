@@ -3,7 +3,7 @@ require_once '../Config/config.php';
 
 // If already logged in, redirect to dashboard
 if (isLoggedIn()) {
-    redirect('dashBoard.php');
+    redirect('../Events/dashBoard.php');
 }
 
 $errors = array();
@@ -78,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Event Garden - Register</title>
     <link rel="stylesheet" href="../../Eventcss/homePage.css">
     <link rel="stylesheet" href="../../Eventcss/register.css">
+    <script src="../EventJavascript/Event.js"></script>
 </head>
 <body class="back">
     <!-- Header Navigation -->
@@ -105,26 +106,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="success"><?php echo htmlspecialchars($success); ?></div>
             <?php endif; ?>
             
-            <form method="POST" action="">
+            <form method="POST" action="" id="regForm">
 
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
+                    <input type="text" name="username"  id="user"  value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
+                    <input type="email" name="email" name="email" id="mail" value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" id="pass" required>
                 </div>
                 
                 <div class="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" name="confirm_password" required>
+                    <input type="password" name="confirm_password" id="cpass" required>
                 </div>
                                 
                 <button type="submit">Register</button>

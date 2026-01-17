@@ -132,14 +132,12 @@ ul li a:hover {
    /* Body background */
 .back {
     padding-top: 100px; /* Height of your menu bar */
-    /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-    background-image: linear-gradient(45deg, #ff005c, #5200ff);
+    background-image: linear-gradient(45deg, #000000, #ff005c, #5200ff);
     background-attachment: fixed; /* Ensures the gradient doesn't scroll with content */
     min-height: 100vh; /* This ensures the background covers the full viewport height */
     padding-bottom: 100px;
 }
 .hero {
-    background-image: linear-gradient(45deg, #ff005c, #5200ff);
     color: white;
     padding: 100px 20px;
     text-align: center;

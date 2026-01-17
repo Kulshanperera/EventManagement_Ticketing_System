@@ -26,18 +26,24 @@ function isAdmin() {
 <body class="back">
 
 
-    <header>
-  <nav class="navbar">
+<header>
+<nav class="navbar">
     <a href="homePage.php" class="logo">Event Garden</a>
-       <div class="user-info">
+    <div class="user-info">
         <?php if (isLoggedIn()): ?>
-            <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <!-- Show when LOGGED IN -->
+            <span>Welcome, <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?></span>
             <a href="homePage.php" class="browse-btn">Home</a>
+            <a href="help.php" class="browse-btn">Help</a>
             <a href="EventUsers/logout.php" class="logout">Logout</a>
+        <?php else: ?>
+            <!-- Show when NOT LOGGED IN -->
+            <a href="EventUsers/login.php" class="browse-btn">Login</a>
+            <a href="EventUsers/register.php" class="browse-btn">Register</a>
+            <a href="help.php" class="browse-btn">Help</a>
         <?php endif; ?>
-                    <a href="help.php" class="browse-btn">Help</a>
-        </div>
-    </nav>
+    </div>
+</nav>
 </header>
 
     <!-- Hero Section (Homepage Content) -->
