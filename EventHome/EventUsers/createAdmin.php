@@ -30,15 +30,31 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 mysqli_query($conn, "DELETE FROM users WHERE username = 'admin'");
 
 // Insert new admin
-$sql = "INSERT INTO users (username, email, password, role) VALUES ('admin', 'admin@user.com', '$hashed', 'admin')";
+$sql = "INSERT INTO users (username, email, password, role) 
+        VALUES (?, ?, ?, ?)";
 
-if (mysqli_query($conn, $sql)) {
-    echo "Admin user created successfully!<br>";
-    echo "Username: admin OR Email: admin@user.com<br>";
-    echo "Password: admin123<br>";
-    echo "Hash: $hashed";
+$stmt = mysqli_prepare($conn, $sql);
+
+if ($stmt) {
+    $username = "admin";
+    $email    = "admin@user.com";
+    $role     = "admin";
+
+    // bind parameters (ssss = 4 strings)
+    mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed, $role);
+
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Admin user created successfully!<br>";
+        echo "Username: admin OR Email: admin@user.com<br>";
+        echo "Password: admin123<br>";
+        echo "Hash: $hashed";
+    } else {
+        echo "Execution failed: " . mysqli_stmt_error($stmt);
+    }
+
+    mysqli_stmt_close($stmt);
 } else {
-    echo "Error: " . mysqli_error($conn);
+    echo "Prepare failed: " . mysqli_error($conn);
 }
 ?>
 

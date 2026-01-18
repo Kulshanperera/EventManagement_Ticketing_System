@@ -3,7 +3,7 @@ require_once '../Config/config.php';
 
 // Check if user is logged in
 if (!isLoggedIn()) {
-    redirect('login.php');
+    redirect('../EventUsers/login.php');
 }
 $sql = "SELECT * FROM events ORDER BY event_date DESC";
 $result = mysqli_query($conn, $sql);

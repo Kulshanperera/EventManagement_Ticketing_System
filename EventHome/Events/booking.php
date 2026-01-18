@@ -9,28 +9,37 @@ if (!isset($_GET['ref'])) {
     redirect('dashBoard.php');
 }
 
-$booking_reference = mysqli_real_escape_string($conn, $_GET['ref']);
+$booking_reference = $_GET['ref'];
+$user_id = $_SESSION['user_id'];
 
-$sql = "SELECT b.*, e.title, e.event_date, e.event_time, e.location, u.email 
-        FROM bookings b 
-        JOIN events e ON b.event_id = e.id 
-        JOIN users u ON b.user_id = u.id 
-        WHERE b.booking_reference = '$booking_reference' AND b.user_id = {$_SESSION['user_id']}";
+// Prepare SQL
+$sql = "
+    SELECT b.*, e.title, e.event_date, e.event_time, e.location, u.email
+    FROM bookings b
+    JOIN events e ON b.event_id = e.id
+    JOIN users u ON b.user_id = u.id
+    WHERE b.booking_reference = ? AND b.user_id = ?
+";
 
-$result = mysqli_query($conn, $sql);
+$stmt = mysqli_prepare($conn, $sql);
+if (!$stmt) {
+    die("Prepare failed: " . mysqli_error($conn));
+}
 
-if (mysqli_num_rows($result) == 0) {
+// s = string, i = integer
+mysqli_stmt_bind_param($stmt, "si", $booking_reference, $user_id);
+mysqli_stmt_execute($stmt);
+
+$result = mysqli_stmt_get_result($stmt);
+
+if (mysqli_num_rows($result) === 0) {
+    mysqli_stmt_close($stmt);
     redirect('customer_dashboard.php');
+    exit;
 }
 
 $booking = mysqli_fetch_assoc($result);
-
-// Get booking tickets
-$tickets_sql = "SELECT bt.*, t.ticket_name 
-                FROM booking_tickets bt 
-                JOIN tickets t ON bt.ticket_id = t.id 
-                WHERE bt.booking_id = {$booking['id']}";
-$tickets = mysqli_query($conn, $tickets_sql);
+mysqli_stmt_close($stmt);
 ?>
 
 <!DOCTYPE html>

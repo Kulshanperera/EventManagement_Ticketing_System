@@ -57,28 +57,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                    image = '$image'
                    WHERE id = $event_id";
     
-    if (mysqli_query($conn, $update_sql)) {
-        // Delete all existing tickets
-        mysqli_query($conn, "DELETE FROM tickets WHERE event_id = $event_id");
-        
-        // Insert updated tickets
-        if (isset($_POST['ticket_name']) && is_array($_POST['ticket_name'])) {
-            for ($i = 0; $i < count($_POST['ticket_name']); $i++) {
-                $ticket_name = mysqli_real_escape_string($conn, $_POST['ticket_name'][$i]);
-                $price = floatval($_POST['ticket_price'][$i]); // Convert to float
-                $quantity = intval($_POST['ticket_quantity'][$i]); // Convert to int
-                $status = mysqli_real_escape_string($conn, $_POST['ticket_status'][$i]); // Escape status too
-                
-                $ticket_sql = "INSERT INTO tickets (event_id, ticket_name, price, quantity, status) 
-                              VALUES ($event_id, '$ticket_name', $price, $quantity, '$status')";
-                
-                if (!mysqli_query($conn, $ticket_sql)) {
-                    $error .= "Error inserting ticket: " . mysqli_error($conn) . "<br>";
+if (mysqli_query($conn, $update_sql)) {
+    // Delete all existing tickets
+    mysqli_query($conn, "DELETE FROM tickets WHERE event_id = $event_id");
+    
+    // Insert updated tickets (only if data is provided)
+    if (isset($_POST['ticket_name']) && is_array($_POST['ticket_name'])) {
+        for ($i = 0; $i < count($_POST['ticket_name']); $i++) {
+            // Skip empty ticket entries
+            $ticket_name_trimmed = trim($_POST['ticket_name'][$i]);
+            if (empty($ticket_name_trimmed) || empty($_POST['ticket_price'][$i])) {
+                continue;
+            }
+            
+            $ticket_name = mysqli_real_escape_string($conn, trim($_POST['ticket_name'][$i]));
+            $price = floatval($_POST['ticket_price'][$i]);
+            $quantity = !empty($_POST['ticket_quantity'][$i]) ? intval($_POST['ticket_quantity'][$i]) : NULL;
+            $status = $_POST['ticket_status'][$i];
+            
+            // Only insert if ticket name and price are valid
+            if (!empty($ticket_name) && $price > 0) {
+                if ($quantity === NULL) {
+                    $ticket_sql = "INSERT INTO tickets (event_id, ticket_name, price, quantity, status) 
+                                  VALUES ($event_id, '$ticket_name', $price, NULL, '$status')";
+                } else {
+                    $ticket_sql = "INSERT INTO tickets (event_id, ticket_name, price, quantity, status) 
+                                  VALUES ($event_id, '$ticket_name', $price, $quantity, '$status')";
                 }
+                mysqli_query($conn, $ticket_sql);
             }
         }
-        
-        $message = "Event updated successfully!";
+    }
+    
+    $message = "Event updated successfully!";
         
         // Refresh event data
         $result = mysqli_query($conn, $sql);

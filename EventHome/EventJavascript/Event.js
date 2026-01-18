@@ -150,14 +150,14 @@
         return;
     }
 
-    console.log('Event ID:', eventId);        // ⬅️ ADD THIS LINE
-console.log('Quantities:', quantities);   // ⬅️ ADD THIS LINE
+    console.log('Event ID:', eventId);        
+console.log('Quantities:', quantities); 
 console.log('Ticket IDs:', ticketIds); 
     
     // Create form with booking data
     var form = document.createElement('form');
     form.method = 'POST';
-    form.action = 'order_confirmation.php'; // ⬅️ CHANGED: Now goes to order_confirmation.php
+    form.action = 'order_confirmation.php'; 
     
     // Add event_id
     var eventInput = document.createElement('input');
@@ -172,21 +172,21 @@ console.log('Ticket IDs:', ticketIds);
             // Ticket ID
             var idInput = document.createElement('input');
             idInput.type = 'hidden';
-            idInput.name = 'ticket_id[]'; // ⬅️ NEW: Array format
+            idInput.name = 'ticket_id[]';
             idInput.value = ticketIds[key];
             form.appendChild(idInput);
             
             // Quantity
             var qtyInput = document.createElement('input');
             qtyInput.type = 'hidden';
-            qtyInput.name = 'quantity[]'; // ⬅️ NEW: Array format
+            qtyInput.name = 'quantity[]'; 
             qtyInput.value = quantities[key];
             form.appendChild(qtyInput);
             
             // Price
             var priceInput = document.createElement('input');
             priceInput.type = 'hidden';
-            priceInput.name = 'price[]'; // ⬅️ NEW: Array format
+            priceInput.name = 'price[]'; 
             priceInput.value = prices[key];
             form.appendChild(priceInput);
             
