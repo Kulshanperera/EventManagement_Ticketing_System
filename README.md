@@ -13,6 +13,13 @@ This project demonstrates **secure authentication, role-based access control, da
 ---
 
 # 🚀 Features
+- ✅ View all bookings in one place
+- ✅ Statistics (total, confirmed, cancelled, revenue)
+- ✅ Cancel individual bookings
+- ✅ Automatically restore tickets to inventory
+- ✅ Mark tickets as available again
+- ✅ Track cancellation date/time
+- ✅ Safe with database transactions
 
 ## 👥 User Roles
 | Role | Description |
